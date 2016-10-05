@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+     <legend>Closed Tasks</legend>
+	{% for task in tasks.items %}
+		{% include 'task_summary.html' %}
+	{% endfor %}
+    {% if tasks.has_prev or tasks.has_next %}
+        {% if tasks.has_prev %}<a href="{{ url_for('index', page=tasks.prev_num) }}">&lt;&lt;</a>{% else %}&lt;&lt;{% endif %} | 
+        {% if tasks.has_next %}<a href="{{ url_for('index', page=tasks.next_num) }}">&gt;&gt;</a>{% else %}&gt;&gt;{% endif %}
+    {% endif %}
+{% endblock %}

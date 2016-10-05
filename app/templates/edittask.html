@@ -1,0 +1,18 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="" method="post" name="edittask">
+    <fieldset>
+        {{ form.hidden_tag() }}
+        <legend> Edit '{{ task.name }}' </legend>
+        {{ render_field(form.name) }}
+        {{ render_field(form.done) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.due_date) }}
+        {{ render_field(form.blocks) }}
+        {{ render_field(form.blocked_by) }}
+        <input type="submit" value="Save Changes">
+    </fieldset>
+  </form>
+{% endblock %}

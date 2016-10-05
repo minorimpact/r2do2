@@ -1,0 +1,13 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="" method="post" name="edit">
+    <legend>Edit Information</legend>
+      {{form.hidden_tag()}}
+      {{ render_field(form.name) }}
+      {{ render_field(form.email) }}
+      {{ render_field(form.description) }}
+      <input type="submit" value="Save Changes">
+  </form>
+{% endblock %}

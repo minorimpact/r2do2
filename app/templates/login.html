@@ -1,0 +1,15 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Sign In</h1>
+  <form action="" method="post" name="login">
+    <fieldset>
+      {{ form.hidden_tag() }}
+      <legend> </legend>
+      {{ render_field(form.email) }}
+      {{ render_field(form.password) }}
+      <input type="submit" value="Sign In"><br />
+      <a href="{{ url_for('register') }}">New User</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,7 @@
+<strong><a href="{{ url_for('task', id=task.id) }}">{{ task.name }}</a></strong> 
+{% if task.done == False %}
+    <a href="{{ url_for('complete_task', id=task.id) }}">done</a>
+{% else %}
+    {{ task.completed_date }}
+{% endif %}
+<br />

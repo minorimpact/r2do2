@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table>
+    <tr valign="top">
+        <td>
+            <strong>{{ task.name }}</strong>
+        </td>
+    </tr>
+    <tr valign="top">
+        <td>
+            {% if task.done == False %}
+                <a href="{{ url_for('complete_task', id=task.id) }}">done</a> | 
+                <a href="{{ url_for('edit_task', id=task.id) }}">edit</a> | 
+            {% endif %}
+            <a href="{{ url_for('delete_task', id=task.id) }}">delete</a> 
+        </td>
+    </tr>
+    <tr valign="top">
+        <td>
+            {{ task.description }}
+        </td>
+    </tr>
+    <tr valign="top">
+        <td> Due Date </td>
+        <td> {{ task.due_date }} </td>
+    </tr>
+    {% if task.done == True %}
+        <tr>
+            <td> Completed Date </td>
+            <td>{{ task.completed_date }}</td>
+        </tr>
+    {% endif %}
+    {% for task in task.blocks %}
+        <tr><td>blocks</td><td> {% include 'task_summary.html' %} </td></tr>
+    {% endfor %}
+    {% for task in task.blocked_by %}
+        <tr><td>blocked by</td><td> {% include 'task_summary.html' %} </td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
