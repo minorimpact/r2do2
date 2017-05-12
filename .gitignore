@@ -3,3 +3,4 @@ messages.pot
 *.db
 *.pyc
 tmp/*
+env.sh

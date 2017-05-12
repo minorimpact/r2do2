@@ -13,6 +13,17 @@ else:
     # pip install flask-whooshalchemy
     import flask.ext.whooshalchemy as whooshalchemy
 
+tags = db.Table('tags',
+    db.Column('id', db.Integer, primary_key = True),
+    db.Column('name', db.String(50)),
+    db.Column('object_type', db.String(50)),
+    db.Column('object_id', db.Integer),
+)
+blocked = db.Table('blocked',
+    db.Column('task_id', db.Integer, db.ForeignKey('task.id')),
+    db.Column('blocked_task_id', db.Integer, db.ForeignKey('task.id'))
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(25), index=True, nullable=False)
@@ -73,10 +84,6 @@ class User(db.Model):
     def make_valid_name(name):
         return re.sub('[^a-zA-Z0-9_\.]', '', name)
 
-blocked = db.Table('blocked',
-    db.Column('task_id', db.Integer, db.ForeignKey('task.id')),
-    db.Column('blocked_task_id', db.Integer, db.ForeignKey('task.id'))
-)
 
 class Task(db.Model):
     __searchable__ = ['name', 'description']
@@ -99,6 +106,13 @@ class Task(db.Model):
                               secondary = blocked,
                               primaryjoin = (blocked.c.blocked_task_id==id),
                               secondaryjoin = (blocked.c.task_id==id))
+
+    #def tags(self):
+        #return tags.query.filter(tags.object_id==self.id, tags.object_type=self.__class__.__name__ ).order_by(tags.name)
+
+    #def addTags(self, tags):
+        #for t in tags:
+            #self.addTag(t)
 
     @hybrid_property
     def is_blocked(self):
@@ -123,3 +137,4 @@ def before_delete_task(mapper, connection, target):
 
 if enable_search:
     whooshalchemy.whoosh_index(app, Task)
+
